@@ -300,6 +300,10 @@ Untuk menyelesaikan masalah tersebut, saya menyusun ulang kode dalam file `Playe
 @onready var sprite = $Sprite2D
 ```
 
-**d. Menghapus function func _process(delta):**
+**d. Menghapus function func _process(delta):**  
 
-Setelah menerapkan perubahan tersebut, error CI/CD sudah berhasil diatasi. 
+
+
+
+
+Setelah menerapkan 4 perubahan di atas, error CI/CD sudah berhasil diatasi. 
