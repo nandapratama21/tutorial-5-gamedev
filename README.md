@@ -271,26 +271,26 @@ Untuk menyelesaikan masalah tersebut, saya menyusun ulang kode dalam file `Playe
    
 **b.Pengelompokan variable biasa:**
 ```javascript
-    # Public variables
-    var jumps = 0
-    var can_dash = true
-    var is_dashing = false
-    var dash_direction = Vector2.ZERO
-    var dash_timer = 0.0
-    var dash_cooldown_timer = 0.0
-    var last_press_time = {"ui_left": 0, "ui_right": 0}
-    var is_crouching = false
-    var can_stand = true
-    var normal_texture
-    var crouch_texture
-    var walk1_texture
-    var walk2_texture
-    var jump_texture
-    var fall_texture
-    var facing_right = true
-    var is_walking = false
-    var animation_frame = 0
-    var animation_timer = 0.0
+# Public variables
+var jumps = 0
+var can_dash = true
+var is_dashing = false
+var dash_direction = Vector2.ZERO
+var dash_timer = 0.0
+var dash_cooldown_timer = 0.0
+var last_press_time = {"ui_left": 0, "ui_right": 0}
+var is_crouching = false
+var can_stand = true
+var normal_texture
+var crouch_texture
+var walk1_texture
+var walk2_texture
+var jump_texture
+var fall_texture
+var facing_right = true
+var is_walking = false
+var animation_frame = 0
+var animation_timer = 0.0
 ```
 
 **c.Pengelompokan variabel onready:**
@@ -301,8 +301,11 @@ Untuk menyelesaikan masalah tersebut, saya menyusun ulang kode dalam file `Playe
 ```
 
 **d. Menghapus function func _process(delta):**  
-
-
+Kita menghapus function ini:
+```javascript
+func _process(delta):
+	pass
+```
 
 
 
