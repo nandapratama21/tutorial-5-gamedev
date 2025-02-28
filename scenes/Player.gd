@@ -1,49 +1,43 @@
 extends CharacterBody2D
 
-# Jumping
+# Exports (these must come before regular variables)
 @export var gravity = 200.0
 @export var walk_speed = 200
 @export var jump_speed = -300
 @export var max_jumps = 2
-var jumps = 0
-
-# Dashing
 @export var dash_speed = 500
 @export var dash_duration = 0.2
 @export var dash_cooldown = 0.5
+@export var double_tap_threshold = 0.3
+@export var crouch_speed = 100
+@export var crouch_height = 60
+@export var normal_height = 97.5
+@export var animation_speed = 0.2  # Time between walk animation frames
+
+# Public variables
+var jumps = 0
 var can_dash = true
 var is_dashing = false
 var dash_direction = Vector2.ZERO
 var dash_timer = 0.0
 var dash_cooldown_timer = 0.0
-
-# Detecting double tap
 var last_press_time = {"ui_left": 0, "ui_right": 0}
-@export var double_tap_threshold = 0.3
-
-# Crouching
-@export var crouch_speed = 100
-@export var crouch_height = 60
-@export var normal_height = 97.5
 var is_crouching = false
 var can_stand = true  # To check if the player can stand up
-
-@onready var collision_shape = $CollisionShape2D
-@onready var sprite = $Sprite2D
-# Store the player sprite textures
 var normal_texture
 var crouch_texture
 var walk1_texture
 var walk2_texture
 var jump_texture
 var fall_texture
-
-# Animation Sprite
 var facing_right = true
 var is_walking = false
 var animation_frame = 0
 var animation_timer = 0.0
-@export var animation_speed = 0.2  # Time between walk animation frames
+
+# OnReady variables (these come after regular variables)
+@onready var collision_shape = $CollisionShape2D
+@onready var sprite = $Sprite2D
 
 
 # Called when the node enters the scene tree for the first time.
