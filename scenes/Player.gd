@@ -63,11 +63,6 @@ func _ready():
 	fall_texture = load("res://assets/kenney_platformercharacters/PNG/Player/Poses/player_fall.png")
 
 
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta):
-	pass
-
-
 func _physics_process(delta):
 	if !can_dash:
 		dash_cooldown_timer += delta
