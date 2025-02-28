@@ -21,13 +21,12 @@ var dash_cooldown_timer = 0.0
 var last_press_time = {"ui_left": 0, "ui_right": 0}
 @export var double_tap_threshold = 0.3
 
-
 # Crouching
 @export var crouch_speed = 100
 @export var crouch_height = 60
 @export var normal_height = 97.5
 var is_crouching = false
-var can_stand = true # To check if the player can stand up
+var can_stand = true  # To check if the player can stand up
 
 @onready var collision_shape = $CollisionShape2D
 @onready var sprite = $Sprite2D
@@ -39,33 +38,35 @@ var walk2_texture
 var jump_texture
 var fall_texture
 
-
 # Animation Sprite
 var facing_right = true
 var is_walking = false
 var animation_frame = 0
 var animation_timer = 0.0
-@export var animation_speed = 0.2 # Time between walk animation frames
-
-
+@export var animation_speed = 0.2  # Time between walk animation frames
 
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	# Store the original sprite textures
 	normal_texture = sprite.texture
-	crouch_texture = load("res://assets/kenney_platformercharacters/PNG/Player/Poses/player_duck.png")
-	walk1_texture = load("res://assets/kenney_platformercharacters/PNG/Player/Poses/player_walk1.png")
-	walk2_texture = load("res://assets/kenney_platformercharacters/PNG/Player/Poses/player_walk2.png")
+	crouch_texture = load(
+		"res://assets/kenney_platformercharacters/PNG/Player/Poses/player_duck.png"
+	)
+	walk1_texture = load(
+		"res://assets/kenney_platformercharacters/PNG/Player/Poses/player_walk1.png"
+	)
+	walk2_texture = load(
+		"res://assets/kenney_platformercharacters/PNG/Player/Poses/player_walk2.png"
+	)
 	jump_texture = load("res://assets/kenney_platformercharacters/PNG/Player/Poses/player_jump.png")
 	fall_texture = load("res://assets/kenney_platformercharacters/PNG/Player/Poses/player_fall.png")
-
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
 	pass
-	
+
 
 func _physics_process(delta):
 	if !can_dash:
@@ -73,29 +74,35 @@ func _physics_process(delta):
 		if dash_cooldown_timer >= dash_cooldown:
 			can_dash = true
 			dash_cooldown_timer = 0.0
-	
+
 	# Processing Crouch
 	process_crouch()
 
 	velocity.y += delta * gravity
-	
+
 	if is_on_floor():
 		jumps = 0
-			
 
 	if Input.is_action_just_pressed("ui_up") and jumps < max_jumps:
 		velocity.y = jump_speed
 		jumps += 1
 
-	
 	if Input.is_action_just_pressed("ui_left"):
 		var current_time = Time.get_ticks_msec() / 1000.0
-		if current_time - last_press_time["ui_left"] < double_tap_threshold and can_dash and !is_dashing:
+		if (
+			current_time - last_press_time["ui_left"] < double_tap_threshold
+			and can_dash
+			and !is_dashing
+		):
 			start_dash(Vector2.LEFT)
 		last_press_time["ui_left"] = current_time
 	elif Input.is_action_just_pressed("ui_right"):
 		var current_time = Time.get_ticks_msec() / 1000.0
-		if current_time - last_press_time["ui_right"] < double_tap_threshold and can_dash and !is_dashing:
+		if (
+			current_time - last_press_time["ui_right"] < double_tap_threshold
+			and can_dash
+			and !is_dashing
+		):
 			start_dash(Vector2.RIGHT)
 		last_press_time["ui_right"] = current_time
 
@@ -109,14 +116,14 @@ func _physics_process(delta):
 			dash_timer = 0.0
 	else:
 		velocity.y += delta * gravity
-		
+
 		if is_on_floor():
 			jumps = 0
 
 	if Input.is_action_just_pressed("ui_up") and jumps < max_jumps:
 		velocity.y = jump_speed
 		jumps += 1
-	
+
 	if !is_dashing:
 		if Input.is_action_pressed("ui_left"):
 			velocity.x = -walk_speed
@@ -144,6 +151,7 @@ func _physics_process(delta):
 
 	# "move_and_slide" already takes delta time into account.
 	move_and_slide()
+
 
 func start_dash(direction):
 	is_dashing = true
@@ -177,7 +185,7 @@ func process_crouch():
 
 			# Change sprite texture
 			sprite.texture = normal_texture
-	
+
 	# Check if the player can stand up
 	if is_crouching:
 		var space_state = get_world_2d().direct_space_state
