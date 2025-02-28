@@ -1,0 +1,17 @@
+[gd_scene load_steps=4 format=3 uid="uid://bmcmkpf2rvkm"]
+
+[ext_resource type="Script" path="res://scenes/Player.gd" id="1_dxqll"]
+[ext_resource type="Texture2D" uid="uid://dqe3xcii54qm" path="res://assets/kenney_platformercharacters/PNG/Player/Poses/player_idle.png" id="2_ghx0s"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_yx576"]
+size = Vector2(62, 97.5)
+
+[node name="Player" type="CharacterBody2D"]
+script = ExtResource("1_dxqll")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("2_ghx0s")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(1, 7.25)
+shape = SubResource("RectangleShape2D_yx576")
