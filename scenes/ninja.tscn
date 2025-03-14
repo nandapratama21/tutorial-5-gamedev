@@ -1,7 +1,8 @@
-[gd_scene load_steps=4 format=3 uid="uid://dmj0tlsia33w0"]
+[gd_scene load_steps=5 format=3 uid="uid://dmj0tlsia33w0"]
 
 [ext_resource type="SpriteFrames" uid="uid://d3icb5eeiyae6" path="res://assets/spritesheet/FreeKnight_v1/ninja.tres" id="1_hb4ig"]
 [ext_resource type="Script" path="res://scenes/ninja.gd" id="1_vtsvi"]
+[ext_resource type="AudioStream" uid="uid://3i85jcj2ytk6" path="res://assets/sound/attack.mp3" id="3_4jgjs"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_q78cv"]
 size = Vector2(35, 40)
@@ -25,3 +26,6 @@ shape = SubResource("RectangleShape2D_q78cv")
 [node name="AttackDetectorcol" type="CollisionShape2D" parent="AttackDetector"]
 position = Vector2(-2.5, 20)
 shape = SubResource("RectangleShape2D_q78cv")
+
+[node name="AttackSound" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("3_4jgjs")

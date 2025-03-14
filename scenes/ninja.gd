@@ -62,6 +62,21 @@ func _ready():
 		attack_detector = $AttackDetector
 		attack_detector.body_entered.connect(_on_attack_detector_body_entered)
 
+	# Create attack sound node if it doesn't exist
+	if not has_node("AttackSound"):
+		attack_sound = AudioStreamPlayer.new()
+		attack_sound.name = "AttackSound"
+		add_child(attack_sound)
+
+		# Load the attack sound
+		var sound = load("res://assets/sound/attack.mp3")
+		if sound:
+			attack_sound.stream = sound
+		else:
+			print("Failed to load attack sound")
+	else:
+		attack_sound = $AttackSound
+
 	# Try to find the player in the scene
 	player = get_tree().get_nodes_in_group("player")
 	if player and player.size() > 0:
@@ -77,17 +92,10 @@ func _ready():
 
 
 func create_attack_sound():
-	# Create an AudioStreamPlayer for the attack sound
-	attack_sound = AudioStreamPlayer.new()
-	attack_sound.name = "AttackSound"
-	add_child(attack_sound)
-
-	# Load the attack sound
-	var sound = load("res://assets/sound/attack.mp3")
-	if sound:
-		attack_sound.stream = sound
-	else:
-		print("Failed to load attack sound")
+	print("Playing attack sound")
+	if attack_sound and attack_sound.stream:
+		if not attack_sound.playing:
+			attack_sound.play()
 
 
 func create_attack_detector():
@@ -263,6 +271,12 @@ func attack_player():
 	attack_cooldown = attack_cooldown_time
 	has_dealt_damage = false
 
+	# Play attack sound only if player is within close range
+	if player:
+		var distance = global_position.distance_to(player.global_position)
+		if distance < 100:
+			create_attack_sound()
+
 	print("Ninja attacking player")
 
 
@@ -358,10 +372,6 @@ func is_player_in_range(range_value):
 	# Debug information
 	if range_value == attack_range:
 		print("Distance to player: ", distance, ", Attack range: ", range_value)
-		if distance < 100:
-			if attack_sound and attack_sound.stream:
-				if not attack_sound.playing:
-					attack_sound.play()
 
 	return distance <= range_value
 
