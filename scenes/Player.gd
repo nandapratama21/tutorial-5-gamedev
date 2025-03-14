@@ -47,7 +47,7 @@ func _ready():
 		# If you haven't added the node yet, we'll create one dynamically
 		jump_sound = AudioStreamPlayer.new()
 		add_child(jump_sound)
-		
+
 		# Load the jump sound
 		var sound = load("res://assets/sound/player_jump.mp3")
 		if sound:
@@ -60,7 +60,7 @@ func _physics_process(delta):
 		if dash_cooldown_timer >= dash_cooldown:
 			can_dash = true
 			dash_cooldown_timer = 0.0
-			
+
 	# Decrease attack cooldown
 	if attack_cooldown > 0:
 		attack_cooldown -= delta
@@ -168,7 +168,7 @@ func process_crouch():
 				# Adjust the collision shape
 				collision_shape.shape.size.y = crouch_height
 				collision_shape.position.y = (normal_height - crouch_height) / 2
-				
+
 				# Update animation
 				animated_sprite.play("crouch")
 
@@ -179,7 +179,7 @@ func process_crouch():
 			# Adjust the collision shape
 			collision_shape.shape.size.y = normal_height
 			collision_shape.position.y = 0
-			
+
 			# Animation will be updated in update_animation()
 
 	# Check if the player can stand up
@@ -217,46 +217,48 @@ func update_animation():
 
 func attack():
 	print("Player attacked")
-	
+
 	# Check for double press
 	var current_time = Time.get_ticks_msec() / 1000.0
 	var is_double_press = current_time - last_attack_time < attack_double_press_threshold
 	last_attack_time = current_time
-	
+
 	attack_cooldown = attack_cooldown_time
-	
+
 	# Flash briefly to indicate attack
 	modulate = Color(1.2, 1.2, 1.2)  # Slightly brighter
 	var tween = create_tween()
 	tween.tween_property(self, "modulate", Color(1, 1, 1), 0.2)
-	
+
 	# Get attack direction based on facing
 	var attack_direction = 1 if facing_right else -1
-	
+
 	# Find enemies in attack range
 	var space_state = get_world_2d().direct_space_state
-	
+
 	# Define the attack area as a rectangle in front of the player
 	var query_shape = RectangleShape2D.new()
 	query_shape.size = Vector2(attack_range, collision_shape.shape.size.y)
-	
+
 	# Position the query shape in front of the player
 	var query = PhysicsShapeQueryParameters2D.new()
 	query.shape = query_shape
-	query.transform = Transform2D(0, global_position + Vector2(attack_direction * attack_range/2, 0))
+	query.transform = Transform2D(
+		0, global_position + Vector2(attack_direction * attack_range / 2, 0)
+	)
 	query.collision_mask = 2  # Assuming enemies are on layer 2, adjust as needed
-	
+
 	# Perform the query
 	var results = space_state.intersect_shape(query)
-	
+
 	# Process each hit body
 	for result in results:
 		var body = result.collider
-		
+
 		# Check if this is an enemy (has 'take_damage' method)
 		if body.has_method("take_damage") or body.has_method("die"):
 			print("Hit enemy: ", body.name)
-			
+
 			# If it's a double press, make the enemy disappear
 			if is_double_press:
 				print("Double press detected! Enemy will be removed.")
