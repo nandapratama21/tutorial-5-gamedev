@@ -1,0 +1,27 @@
+[gd_scene load_steps=4 format=3 uid="uid://dmj0tlsia33w0"]
+
+[ext_resource type="SpriteFrames" uid="uid://d3icb5eeiyae6" path="res://assets/spritesheet/FreeKnight_v1/ninja.tres" id="1_hb4ig"]
+[ext_resource type="Script" path="res://scenes/ninja.gd" id="1_vtsvi"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_q78cv"]
+size = Vector2(35, 40)
+
+[node name="Ninja" type="CharacterBody2D"]
+script = ExtResource("1_vtsvi")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+sprite_frames = ExtResource("1_hb4ig")
+animation = &"jump"
+autoplay = "idle"
+frame = 2
+frame_progress = 1.0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(-2.5, 20)
+shape = SubResource("RectangleShape2D_q78cv")
+
+[node name="AttackDetector" type="Area2D" parent="."]
+
+[node name="AttackDetectorcol" type="CollisionShape2D" parent="AttackDetector"]
+position = Vector2(-2.5, 20)
+shape = SubResource("RectangleShape2D_q78cv")

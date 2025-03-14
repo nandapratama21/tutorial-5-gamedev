@@ -1,0 +1,49 @@
+[gd_resource type="SpriteFrames" load_steps=6 format=3 uid="uid://dyrr6gf04iefj"]
+
+[ext_resource type="Texture2D" uid="uid://b1034jocuo7fi" path="res://assets/spritesheet/player_tilesheet.png" id="1_odi1a"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_c2c6c"]
+atlas = ExtResource("1_odi1a")
+region = Rect2(240, 0, 80, 110)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_4elo8"]
+atlas = ExtResource("1_odi1a")
+region = Rect2(0, 0, 80, 110)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_du8en"]
+atlas = ExtResource("1_odi1a")
+region = Rect2(0, 110, 80, 110)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_7pibl"]
+atlas = ExtResource("1_odi1a")
+region = Rect2(80, 110, 80, 110)
+
+[resource]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_c2c6c")
+}],
+"loop": true,
+"name": &"crouch",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_4elo8")
+}],
+"loop": true,
+"name": &"idle",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_du8en")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_7pibl")
+}],
+"loop": true,
+"name": &"walk right",
+"speed": 5.0
+}]
